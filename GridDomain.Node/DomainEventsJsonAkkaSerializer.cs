@@ -49,6 +49,7 @@ namespace GridDomain.Node
         /// <returns>A byte array containing the serialized object</returns>
         public override byte[] ToBinary(object obj)
         {
+            Console.WriteLine("serializing " + obj);
             return Serializer.Value.ToBinary(obj);
         }
 

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.DI.Core;
+using Akka.DI.Unity;
 using Akka.Monitoring;
 using Akka.Monitoring.ApplicationInsights;
 using Akka.Monitoring.PerformanceCounters;
@@ -90,11 +91,10 @@ namespace GridDomain.Node
 
             _transportMode = Systems.Length > 1 ? TransportMode.Cluster : TransportMode.Standalone;
             System.RegisterOnTermination(OnSystemTermination);
+            System.AddDependencyResolver(new UnityDependencyResolver(Container, System));
 
-            var unityContainer = Container;
-            unityContainer.Register(new GridNodeContainerConfiguration(System, _transportMode, Settings));
-
-            unityContainer.Register(Settings.Configuration);
+            Container.Register(new GridNodeContainerConfiguration(System, _transportMode, Settings));
+            Container.Register(Settings.Configuration);
 
             Pipe = Container.Resolve<CommandPipeBuilder>();
             await Settings.MessageRouting.Register(Pipe);
@@ -103,22 +103,13 @@ namespace GridDomain.Node
 
             _quartzScheduler = Container.Resolve<IScheduler>();
             _commandExecutor = Container.Resolve<ICommandExecutor>();
-            _waiterFactory = Container.Resolve<IMessageWaiterFactory>();
+            _waiterFactory   = Container.Resolve<IMessageWaiterFactory>();
 
             ActorTransportProxy = System.ActorOf(Props.Create(() => new ActorTransportProxy(Transport)),
                                                  nameof(CQRS.Messaging.Akka.Remote.ActorTransportProxy));
-            var appInsightsConfig = Container.Resolve<IAppInsightsConfiguration>();
-            var perfCountersConfig = Container.Resolve<IPerformanceCountersConfiguration>();
-
+          
             RegisterCustomAggregateSnapshots();
-
-            if (appInsightsConfig.IsEnabled)
-            {
-                var monitor = new ActorAppInsightsMonitor(appInsightsConfig.Key);
-                ActorMonitoringExtension.RegisterMonitor(System, monitor);
-            }
-            if (perfCountersConfig.IsEnabled)
-                ActorMonitoringExtension.RegisterMonitor(System, new ActorPerformanceCountersMonitor());
+            EnableMonitoring();
 
             Settings.Log.Debug("Launching GridDomain node {Id}", Id);
 
@@ -128,6 +119,20 @@ namespace GridDomain.Node
             await nodeController.Ask<GridNodeController.Started>(new GridNodeController.Start());
 
             Settings.Log.Debug("GridDomain node {Id} started at home {Home}", Id, System.Settings.Home);
+        }
+
+        private void EnableMonitoring()
+        {
+            var appInsightsConfig = Container.Resolve<IAppInsightsConfiguration>();
+            var perfCountersConfig = Container.Resolve<IPerformanceCountersConfiguration>();
+
+            if (appInsightsConfig.IsEnabled)
+            {
+                var monitor = new ActorAppInsightsMonitor(appInsightsConfig.Key);
+                ActorMonitoringExtension.RegisterMonitor(System, monitor);
+            }
+            if (perfCountersConfig.IsEnabled)
+                ActorMonitoringExtension.RegisterMonitor(System, new ActorPerformanceCountersMonitor());
         }
 
         private void RegisterCustomAggregateSnapshots()

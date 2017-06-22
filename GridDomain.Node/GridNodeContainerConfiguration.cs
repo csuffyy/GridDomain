@@ -64,16 +64,13 @@ namespace GridDomain.Node
             container.RegisterType<IHandlerActorTypeFactory, DefaultHandlerActorTypeFactory>();
             container.RegisterType<IPersistentChildsRecycleConfiguration, DefaultPersistentChildsRecycleConfiguration>();
             container.RegisterInstance(AppInsightsConfigSection.Default ?? new DefaultAppInsightsConfiguration());
-
             container.RegisterInstance(PerformanceCountersConfigSection.Default ?? new DefaultPerfCountersConfiguration());
 
             container.RegisterInstance(_actorSystem);
-
-            _actorSystem.AddDependencyResolver(new UnityDependencyResolver(container, _actorSystem));
-
             container.RegisterInstance(_quartzJobRetrySettings);
-            var persistentScheduler = _actorSystem.ActorOf(_actorSystem.DI().Props<SchedulingActor>(),
-                                                           nameof(SchedulingActor));
+
+            var props = _actorSystem.DI().Props<SchedulingActor>();
+            var persistentScheduler = _actorSystem.ActorOf(props, nameof(SchedulingActor));
             container.RegisterInstance(SchedulingActor.RegistrationName, persistentScheduler);
 
             var messageWaiterFactory = new MessageWaiterFactory(_actorSystem, transport, _defaultCommandExecutionTimeout);
