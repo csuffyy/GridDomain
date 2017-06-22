@@ -15,7 +15,6 @@ using GridDomain.Tests.Framework;
 using GridDomain.Tests.XUnit.BalloonDomain;
 using GridDomain.Tests.XUnit.BalloonDomain.Events;
 using GridDomain.Tests.XUnit.Sagas.SoftwareProgrammingDomain;
-using KellermanSoftware.CompareNetObjects;
 using Ploeh.AutoFixture;
 using Xunit;
 
