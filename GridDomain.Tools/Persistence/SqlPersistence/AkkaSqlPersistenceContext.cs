@@ -13,7 +13,9 @@ namespace GridDomain.Tools.Persistence.SqlPersistence
             Database.SetInitializer<AkkaSqlPersistenceContext>(null);
         }
 
-        public AkkaSqlPersistenceContext(string connectionString) : base(connectionString) {}
+        public AkkaSqlPersistenceContext(string connectionString)
+        {
+        }
 
         public DbSet<JournalItem> Journal { get; set; } // JournalEntry
         public DbSet<Metadata> Metadatas { get; set; } // Metadata
@@ -25,17 +27,18 @@ namespace GridDomain.Tools.Persistence.SqlPersistence
             var nullableValue = sqlValue as INullable;
             if (nullableValue != null)
                 return nullableValue.IsNull;
+
             return sqlValue == null || sqlValue == DBNull.Value;
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Configurations.Add(new JournalConfiguration());
-            modelBuilder.Configurations.Add(new MetadataConfiguration());
-            modelBuilder.Configurations.Add(new SnapshotConfiguration());
-        }
+       protected override void OnModelCreating(DbModelBuilder modelBuilder)
+       {
+           base.OnModelCreating(modelBuilder);
+       
+           modelBuilder.Configurations.Add(new JournalConfiguration());
+           modelBuilder.Configurations.Add(new MetadataConfiguration());
+           modelBuilder.Configurations.Add(new SnapshotConfiguration());
+       }
 
         public static DbModelBuilder CreateModel(DbModelBuilder modelBuilder, string schema)
         {

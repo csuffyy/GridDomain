@@ -11,8 +11,8 @@ namespace GridDomain.Tools.Persistence.SqlPersistence
         DbSet<Metadata> Metadatas { get; set; } // Metadata
         DbSet<SnapshotItem> Snapshots { get; set; } // Snapshots
 
-        int SaveChanges();
-        Task<int> SaveChangesAsync();
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+       int SaveChanges();
+       Task<int> SaveChangesAsync();
+       Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

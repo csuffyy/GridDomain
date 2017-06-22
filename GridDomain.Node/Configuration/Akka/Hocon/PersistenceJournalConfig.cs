@@ -14,7 +14,7 @@ namespace GridDomain.Node.Configuration.Akka.Hocon
         {
             _eventAdatpersConfig = eventAdatpersConfig;
             _dbConfiguration = dbConfiguration;
-            _sqlJournalType = sqlJournalType ?? typeof(SqlDomainJournal);
+            _sqlJournalType = sqlJournalType;// ?? typeof(SqlDomainJournal);
         }
 
         public string Build()

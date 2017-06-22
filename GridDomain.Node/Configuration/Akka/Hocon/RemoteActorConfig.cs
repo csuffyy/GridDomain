@@ -38,6 +38,7 @@ namespace GridDomain.Node.Configuration.Akka.Hocon
              serializers {
                         wire = """ + typeof(WireSerializer).AssemblyQualifiedShortName() + @"""
                         json = """ + typeof(DomainEventsJsonAkkaSerializer).AssemblyQualifiedShortName() + @"""
+                        hyperion = """ + typeof(HyperionSerializer).AssemblyQualifiedShortName() + @"""
              }
              
              serialization-bindings {
@@ -45,7 +46,7 @@ namespace GridDomain.Node.Configuration.Akka.Hocon
                                    """ + typeof(IMemento).AssemblyQualifiedShortName() + @"""    = json
                                   # for local snapshots storage
                                    ""Akka.Persistence.Serialization.Snapshot, Akka.Persistence"" = json
-                                   ""System.Object"" = wire
+                                   ""System.Object"" = hyperion
 
              }
        }";

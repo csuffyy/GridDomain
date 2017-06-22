@@ -33,13 +33,11 @@
     <Reference Include="Akka, Version=1.2.0.33, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Akka.1.2.0\lib\net45\Akka.dll</HintPath>
     </Reference>
-    <Reference Include="Akka.Persistence, Version=1.1.2.281, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Akka.Persistence.1.1.2.281-beta\lib\net45\Akka.Persistence.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Akka.Persistence, Version=1.2.0.36, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Akka.Persistence.1.2.0.36-beta\lib\net45\Akka.Persistence.dll</HintPath>
     </Reference>
     <Reference Include="Akka.Persistence.Sql.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Akka.Persistence.Sql.Common.1.1.2.257-beta\lib\net45\Akka.Persistence.Sql.Common.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Akka.Persistence.Sql.Common.1.2.0.36-beta\lib\net45\Akka.Persistence.Sql.Common.dll</HintPath>
     </Reference>
     <Reference Include="Akka.Persistence.SqlServer, Version=1.1.1.158, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Akka.Persistence.SqlServer.1.1.1.158-beta\lib\net45\Akka.Persistence.SqlServer.dll</HintPath>
