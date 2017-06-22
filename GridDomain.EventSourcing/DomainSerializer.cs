@@ -25,7 +25,7 @@ namespace GridDomain.EventSourcing
                        Formatting = Formatting.Indented,
                        PreserveReferencesHandling = PreserveReferencesHandling.All,
                        TypeNameHandling = TypeNameHandling.All,
-                       TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+                       TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                        CheckAdditionalContent = false,
                        ContractResolver = new PrivateSetterContractResolver(),
                        ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor

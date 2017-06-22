@@ -25,8 +25,6 @@ namespace GridDomain.Tests.XUnit
         private readonly List<IContainerConfiguration> _containerConfiguration = new List<IContainerConfiguration>();
         private readonly List<IMessageRouteMap> _routeMap = new List<IMessageRouteMap>();
 
-        private ActorSystem _system;
-
         public NodeTestFixture(IContainerConfiguration containerConfiguration = null,
                                IMessageRouteMap map = null,
                                TimeSpan? defaultTimeout = null,

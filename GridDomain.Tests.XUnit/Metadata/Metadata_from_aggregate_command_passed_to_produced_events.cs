@@ -18,7 +18,6 @@ namespace GridDomain.Tests.XUnit.Metadata
     public class Metadata_from_aggregate_command_passed_to_produced_events : SampleDomainCommandExecutionTests
     {
         public Metadata_from_aggregate_command_passed_to_produced_events(ITestOutputHelper output) : base(output) {}
-        private IMessageMetadataEnvelop<BalloonCreated> _answer;
         private InflateNewBallonCommand _command;
         private MessageMetadata _commandMetadata;
 
